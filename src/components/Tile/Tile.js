@@ -1,11 +1,22 @@
 import React from 'react';
-import './Tile.css';
+import styled from 'styled-components';
 
 const tile = ( props ) => {
 
+    const StyledImg = styled.img`
+        margin: 10%;
+        background: grey;
+        border-radius: 6px;
+        border: 3px solid white;
+        background: ${props.image.color}
+        width: 80%;
+    `
     return (
         <div>
-            <img className='tile' src={props.image.src} alt='fs'/>
+            <StyledImg
+                src={props.image.src}
+                alt={props.image.text}
+            />
             <p>{props.image.text}</p>
         </div>
     )
