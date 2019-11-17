@@ -5,6 +5,7 @@ import './App.css';
 import icons from './icons'
 import Tile from './components/Tile/Tile.js'
 import Search from './components/Search/Search.js'
+import Pockemon from './components/Pockemon/Pockemon.js'
 
 class App extends Component {
   state = {
@@ -13,7 +14,16 @@ class App extends Component {
   }
 
   inputHandler = (e) => {
-      console.log(e)
+      const input = e.target.value
+      const selected = this.state.pokemons.find(pokemon => pokemon.name === input)
+      if (selected) {
+        console.log(selected)
+          this.fetchPockemon(selected.url)
+      } else {
+          this.setState({
+              searching: false
+          })
+      }
   }
 
   componentDidMount () {
@@ -21,6 +31,15 @@ class App extends Component {
           .then( response => {
               this.setState({pokemons: response.data.results});
           } );
+  }
+
+  fetchPockemon(url) {
+      axios.get( url )
+        .then( response => {
+            this.setState({
+              pockemon: response.data,
+              searching: true})
+        } );
   }
 
   render() {
@@ -34,20 +53,16 @@ class App extends Component {
       return (
         <div className="App">
 
-        <Search pokemons={this.state.pokemons} selected={this.inputHandler}/>
-
-        { this.state.searching ? null :
-            <div className="tile-list">
-                {icons.map(icon => {
-
+      <div className="search">
+          <Search pokemons={this.state.pokemons} selected={this.inputHandler}/>
+      </div>
+      <div className="tile-list">
+        { this.state.searching ? <Pockemon item={this.state.pockemon}/> :
+                icons.map(icon => {
                     return  (<Tile style={style} image={icon} key={icon.id}/>)
                 })
-                }
-            </div>
         }
-
-
-
+        </div>
         </div>
       );
     }
