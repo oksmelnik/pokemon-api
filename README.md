@@ -5,7 +5,9 @@ Open terminal, run "yarn install" start or "npm install" depending on your setup
 Possible improvements:
 
 1 error handlers around the api requests
+
 2 there is small gap before the pokemon image is shown, loading state could be added
+
 3 tests should be added
 
 Possible difficulties:
